@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Cliente;
-use BeyondCode\EmailConfirmation\Traits\RegistersUsers;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -73,6 +73,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'foto_url' => $data['foto_url'],
+            'email_verified_at' => null,
         ]);
 
         Cliente::create([
@@ -82,7 +83,6 @@ class RegisterController extends Controller
             'created_at' => now(),
         ]);
         $user->save();
-        $user->markEmailAsVerified();
         return $user;
     }
 }

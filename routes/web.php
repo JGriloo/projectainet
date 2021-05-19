@@ -20,11 +20,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', [DashboardController::class, 'index'])->name('home');
 
-Route::name('auth.resend_confirmation')->get('/register/confirm/resend', [RegisterController::class, 'resendConfirmation']);
-
-Route::name('auth.confirm')->get('/register/confirm/{confirmation_code}', [RegisterController::class, 'confirm']);
-
-Route::middleware('auth')->group(function () {
+Route::middleware('verified')->group(function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 

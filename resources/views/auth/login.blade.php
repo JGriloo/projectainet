@@ -1,17 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (session('confirmation'))
-        <div class="alert alert-info" role="alert">
-            {!! session('confirmation') !!}
-        </div>
-    @endif
-
-    @if ($errors->has('confirmation') > 0)
-        <div class="alert alert-danger" role="alert">
-            {!! $errors->first('confirmation') !!}
-        </div>
-    @endif
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">

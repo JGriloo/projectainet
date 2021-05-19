@@ -14,7 +14,7 @@ class ClienteController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth','verified']); //só consegue entrar em todos os metodos do perfil se tiver o e-mail verificado
     }
 
     public function admin(Request $request)
