@@ -12,7 +12,7 @@ class Cliente extends Model
     use SoftDeletes;
 
     public $timestamps = false;
-    protected $fillable = ['nif', 'endereco'];
+    protected $fillable = ['id', 'nif', 'endereco', 'created_at'];
 
     public function user()
     {

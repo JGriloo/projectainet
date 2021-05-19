@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ClienteController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
+
     public function admin(Request $request)
     {
         $qry = Cliente::query();

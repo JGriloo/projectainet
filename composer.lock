@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ddeabc1ce42c24615f2fd0343a6ea0f2",
+    "content-hash": "514f482d5cb45750abb6f20db49f02ac",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -61,6 +61,69 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.0.3"
             },
             "time": "2021-03-11T06:42:03+00:00"
+        },
+        {
+            "name": "beyondcode/laravel-confirm-email",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beyondcode/laravel-confirm-email.git",
+                "reference": "e223c017e262698feb913166a48d585118a02acd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/beyondcode/laravel-confirm-email/zipball/e223c017e262698feb913166a48d585118a02acd",
+                "reference": "e223c017e262698feb913166a48d585118a02acd",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/auth": "^8.0",
+                "illuminate/database": "^8.0",
+                "illuminate/notifications": "^8.0",
+                "illuminate/support": "^8.0",
+                "laravel/ui": "^3.0",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "BeyondCode\\EmailConfirmation\\EmailConfirmationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BeyondCode\\EmailConfirmation\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcel Pociot",
+                    "email": "marcel@beyondco.de",
+                    "homepage": "https://beyondcode.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Add email verification to your Laravel projects.",
+            "homepage": "https://github.com/beyondcode/laravel-confirm-email",
+            "keywords": [
+                "beyondcode",
+                "laravel-confirm-email"
+            ],
+            "support": {
+                "issues": "https://github.com/beyondcode/laravel-confirm-email/issues",
+                "source": "https://github.com/beyondcode/laravel-confirm-email/tree/2.1.0"
+            },
+            "time": "2021-05-14T07:36:08+00:00"
         },
         {
             "name": "brick/math",

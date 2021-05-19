@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
+Route::get('/', [DashboardController::class, 'index'])->name('home');
+
+Route::name('auth.resend_confirmation')->get('/register/confirm/resend', [RegisterController::class, 'resendConfirmation']);
+
+Route::name('auth.confirm')->get('/register/confirm/{confirmation_code}', [RegisterController::class, 'confirm']);
 
 Route::middleware('auth')->group(function () {
 
@@ -41,5 +47,3 @@ Route::middleware('auth')->group(function () {
     Route::delete('clientes/{cliente}/foto', [ClienteController::class, 'destroy_foto'])->name('clientes.foto.destroy')
         ->middleware('can:update,cliente');
 });
-
-Auth::routes(['register' => false]);
