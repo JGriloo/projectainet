@@ -47,15 +47,9 @@
                     </td>
                     <td>
                         @can('delete', $cliente)
-                            <a href="{{ route('clientes.destroy', ['cliente' => $cliente]) }}" class="btn btn-danger btn-sm"
-                                role="button" aria-pressed="true">Apagar</a>
-                        @endcan
-                    </td>
-                    <td>
-                        @can('delete', $cliente)
-                            <form action="{{ route('clientes.destroy', ['cliente' => $cliente]) }}" method=" POST">
+                            <form action="{{ route('clientes.deleteCliente', ['cliente' => $cliente]) }}" method="POST">
                                 @csrf
-                                @method("DELETE")
+                                @method('DELETE')
                                 <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
                             </form>
                         @endcan

@@ -99,34 +99,6 @@ class ClienteController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function destroy(Cliente $cliente)
-    {
-        $oldName = $cliente->user->name;
-        $oldUserID = $cliente->id;
-        $oldUrlFoto = $cliente->user->foto_url;
-        try {
-            $cliente->delete();
-            User::destroy($oldUserID);
-            Storage::delete('public/fotos/' . $oldUrlFoto);
-            return redirect()->route('clientes')
-                ->with('alert-msg', 'Cliente "' . $cliente->user->name . '" foi apagado com sucesso!')
-                ->with('alert-type', 'success');
-        } catch (\Throwable $th) {
-            // $th é a exceção lançada pelo sistema - por norma, erro ocorre no servidor BD MySQL
-            // Descomentar a próxima linha para verificar qual a informação que a exceção tem
-
-            if ($th->errorInfo[1] == 1451) {   // 1451 - MySQL Error number for "Cannot delete or update a parent row: a foreign key constraint fails (%s)"
-                return redirect()->route('clientes')
-                    ->with('alert-msg', 'Não foi possível apagar o Cliente "' . $oldName . '", porque este cliente já está em uso!')
-                    ->with('alert-type', 'danger');
-            } else {
-                return redirect()->route('clientes')
-                    ->with('alert-msg', 'Não foi possível apagar o Cliente "' . $oldName . '". Erro: ' . $th->errorInfo[2])
-                    ->with('alert-type', 'danger');
-            }
-        }
-    }
-
     public function destroy_foto(Cliente $cliente)
     {
         Storage::delete('public/fotos/' . $cliente->user->foto_url);
@@ -135,5 +107,30 @@ class ClienteController extends Controller
         return redirect()->route('clientes.edit', ['cliente' => $cliente])
             ->with('alert-msg', 'Foto do cliente "' . $cliente->user->name . '" foi removida!')
             ->with('alert-type', 'success');
+    }
+
+    public function deleteCliente(Cliente $cliente){
+        try{
+            $oldUserID = $cliente->id;
+            $oldUserName = $cliente->user->name;
+            $cliente->delete();
+            User::where('id','=',$oldUserID)->delete();
+            return redirect()->route('clientes')
+                ->with('alert-msg', 'Cliente "' . $oldUserName . '" foi apagado com sucesso!')
+                ->with('alert-type', 'success');
+        } catch (\Throwable $th) {
+            // $th é a exceção lançada pelo sistema - por norma, erro ocorre no servidor BD MySQL
+            // Descomentar a próxima linha para verificar qual a informação que a exceção tem
+            if ($th->errorInfo[1] == 1451) {   // 1451 - MySQL Error number for "Cannot delete or update a parent row: a foreign key constraint fails (%s)"
+                return redirect()->route('clientes')
+                    ->with('alert-msg', 'Não foi possível apagar o Cliente "' . $oldUserName . '", porque este cliente já está em uso!')
+                    ->with('alert-type', 'danger');
+            } else {
+                return redirect()->route('clientes')
+                    ->with('alert-msg', 'Não foi possível apagar o Cliente "' . $oldUserName . '". Erro: ' . $th->errorInfo[2])
+                    ->with('alert-type', 'danger');
+            }
+        }
+
     }
 }

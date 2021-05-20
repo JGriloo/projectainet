@@ -38,8 +38,8 @@ Route::middleware('verified')->group(function () {
         ->middleware('can:bloquear,cliente');
     Route::put('clientes/{cliente}', [ClienteController::class, 'update'])->name('clientes.update')
         ->middleware('can:update,cliente');
-    Route::delete('clientes/{cliente}', [ClienteController::class, 'destroy'])->name('clientes.destroy')
-        ->middleware('can:delete,cliente');
     Route::delete('clientes/{cliente}/foto', [ClienteController::class, 'destroy_foto'])->name('clientes.foto.destroy')
         ->middleware('can:update,cliente');
+    Route::delete('clientes/{cliente}', [ClienteController::class, 'deleteCliente'])->name('clientes.deleteCliente')
+        ->middleware('can:delete,cliente');
 });
