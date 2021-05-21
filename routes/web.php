@@ -34,7 +34,7 @@ Route::middleware('verified')->group(function () {
         ->middleware('can:create,App\Models\Cliente');
     Route::post('clientes', [ClienteController::class, 'store'])->name('clientes.store')
         ->middleware('can:create,App\Models\Cliente');
-    Route::put('clientes/{cliente}/bloquear', [ClienteController::class, 'bloquear'])->name('clientes.bloquear')
+    Route::put('clientes/{cliente}/bloqueado', [ClienteController::class, 'bloquear'])->name('clientes.bloquear')
         ->middleware('can:bloquear,cliente');
     Route::put('clientes/{cliente}', [ClienteController::class, 'update'])->name('clientes.update')
         ->middleware('can:update,cliente');

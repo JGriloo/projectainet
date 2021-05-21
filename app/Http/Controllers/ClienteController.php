@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Cliente;
 use App\Http\Requests\ClientePost;
+use App\Http\Requests\PostBloqueadoUser;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -39,15 +40,20 @@ class ClienteController extends Controller
             ->withCliente($cliente);
     }
 
-    public function bloquear(ClientePost $request, Cliente $cliente)
+    public function bloquear(PostBloqueadoUser $request, Cliente $cliente)
     {
-        $validated_data = $request->validated();
-        $cliente->user->bloqueado = $validated_data['bloqueado'];
-        $cliente->user->bloqueado = 1;
-        $cliente->user->save();
-        return redirect()->route('clientes')
-            ->with('alert-msg', 'Cliente "' . $cliente->user->name . '" foi bloqueado com sucesso!')
-            ->with('alert-type', 'success');
+            $cliente->user->bloqueado = $request->validated()['bloqueado'];
+            $cliente->user->save();
+            if ($cliente->user->bloqueado==1) {
+                return redirect()->route('clientes')
+                    ->with('alert-msg', 'Cliente "' . $cliente->user->name . '" foi bloqueado com sucesso!')
+                    ->with('alert-type', 'success');
+            }else{
+                return redirect()->route('clientes')
+                    ->with('alert-msg', 'Cliente "' . $cliente->user->name . '" foi desbloqueado com sucesso!')
+                    ->with('alert-type', 'success');
+            }
+
     }
 
     public function create()

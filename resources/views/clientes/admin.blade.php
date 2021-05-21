@@ -41,8 +41,21 @@
                     </td>
                     <td>
                         @can('bloquear', $cliente)
-                            <a href="{{ route('clientes.bloquear', ['cliente' => $cliente]) }}" class="btn btn-warning btn-sm"
-                                role="button" aria-pressed="true">Bloquear</a>
+                            @if ($cliente->user->bloqueado==0)
+                                <form action="{{ route('clientes.bloquear', ['cliente' => $cliente]) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="bloqueado" value='1'>
+                                    <input type="submit" class="btn btn-warning btn-sm" value="Bloquear">
+                                </form>
+                            @else
+                                <form action="{{ route('clientes.bloquear', ['cliente' => $cliente]) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="bloqueado" value='0'>
+                                    <input type="submit" class="btn btn-success btn-sm" value="Desbloquear">
+                                </form>
+                            @endif
                         @endcan
                     </td>
                     <td>
