@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,26 @@ Route::middleware('verified')->group(function () {
         ->middleware('can:update,cliente');
     Route::delete('clientes/{cliente}/foto', [ClienteController::class, 'destroy_foto'])->name('clientes.foto.destroy')
         ->middleware('can:update,cliente');
-    Route::delete('clientes/{cliente}', [ClienteController::class, 'deleteCliente'])->name('clientes.deleteCliente')
+    Route::delete('clientes/{cliente}', [ClienteController::class, 'delete'])->name('clientes.delete')
         ->middleware('can:delete,cliente');
+
+
+    Route::get('funcionarios', [FuncionarioController::class, 'admin'])->name('funcionarios')
+        ->middleware('can:viewAny,App\Models\User');
+    Route::get('funcionarios/{funcionario}/consult', [FuncionarioController::class, 'consult'])->name('funcionarios.consult')
+        ->middleware('can:viewAny,funcionario');
+    Route::put('funcionarios/{funcionario}/bloqueado', [FuncionarioController::class, 'bloquear'])->name('funcionarios.bloquear')
+        ->middleware('can:bloquear,funcionario');
+    Route::delete('funcionarios/{funcionario}', [FuncionarioController::class, 'delete'])->name('funcionarios.delete')
+        ->middleware('can:delete,funcionario');
+    Route::get('funcionarios/funcionario', [FuncionarioController::class, 'create'])->name('funcionarios.create')
+        ->middleware('can:create,App\Models\User');
+    Route::post('funcionarios', [FuncionarioController::class, 'store'])->name('funcionarios.store')
+        ->middleware('can:create,App\Models\User');
+    Route::put('funcionarios/{funcionario}', [FuncionarioController::class, 'update'])->name('funcionarios.update')
+        ->middleware('can:update,funcionario');
+    Route::get('funcionarios/{funcionario}/edit', [FuncionarioController::class, 'edit'])->name('funcionarios.edit')
+        ->middleware('can:update,funcionario');
+    Route::delete('funcionarios/{funcionario}/foto', [FuncionarioController::class, 'destroy_foto'])->name('funcionarios.foto.destroy')
+        ->middleware('can:update,funcionario');
 });

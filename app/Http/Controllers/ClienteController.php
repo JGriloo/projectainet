@@ -115,7 +115,7 @@ class ClienteController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function deleteCliente(Cliente $cliente){
+    public function delete(Cliente $cliente){
         try{
             $oldUserID = $cliente->id;
             $oldUserName = $cliente->user->name;

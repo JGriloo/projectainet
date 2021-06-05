@@ -44,15 +44,27 @@
                 </a>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
             <!-- Nav Item -->
             @can('viewAny', App\Models\Cliente::class)
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+
                 <li class="nav-item {{ Route::currentRouteName() == 'clientes' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('clientes') }}">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Clientes</span></a>
+                </li>
+            @endcan
+
+            <!-- Nav Item -->
+            @can('viewAny', App\Models\User::class)
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+
+                <li class="nav-item {{ Route::currentRouteName() == 'funcionarios' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('funcionarios') }}">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Funcionários</span></a>
                 </li>
             @endcan
 

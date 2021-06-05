@@ -34,13 +34,16 @@
                     <td>{{ $cliente->endereco }}</td>
                     <td>{{ $cliente->nif }}</td>
                     <td>
+                        <div class="col text-center">
                         @can('viewAny', $cliente)
                             <a href="{{ route('clientes.consult', ['cliente' => $cliente]) }}" class="btn btn-primary btn-sm"
                                 role="button" aria-pressed="true">Consultar</a>
                         @endcan
+                        </div>
                     </td>
                     <td>
                         @can('bloquear', $cliente)
+                        <div class="col text-center">
                             @if ($cliente->user->bloqueado==0)
                                 <form action="{{ route('clientes.bloquear', ['cliente' => $cliente]) }}" method="POST">
                                     @csrf
@@ -56,15 +59,18 @@
                                     <input type="submit" class="btn btn-success btn-sm" value="Desbloquear">
                                 </form>
                             @endif
+                        </div>
                         @endcan
                     </td>
                     <td>
                         @can('delete', $cliente)
-                            <form action="{{ route('clientes.deleteCliente', ['cliente' => $cliente]) }}" method="POST">
+                        <div class="col text-center">
+                            <form action="{{ route('clientes.delete', ['cliente' => $cliente]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
                             </form>
+                        </div>
                         @endcan
                     </td>
                 </tr>
