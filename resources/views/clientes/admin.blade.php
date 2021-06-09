@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title', 'Clientes')
 @section('content')
-    <div class="row mb-3">
+    {{-- <div class="row mb-3">
         <div class="col-3">
             @can('create', App\Models\Cliente::class)
                 <a href="{{ route('clientes.create') }}" class="btn btn-success" role="button" aria-pressed="true">Novo
@@ -12,7 +12,7 @@
             <form method="GET" action="{{ route('clientes') }}" class="form-group">
             </form>
         </div>
-    </div>
+    </div> --}}
     <table class="table">
         <thead>
             <tr>
@@ -43,8 +43,7 @@
                     </td>
                     <td>
                         @can('bloquear', $cliente)
-                        <div class="col text-center">
-                            @if ($cliente->user->bloqueado==0)
+                            @if ($cliente->user->bloqueado == 0)
                                 <form action="{{ route('clientes.bloquear', ['cliente' => $cliente]) }}" method="POST">
                                     @csrf
                                     @method('PUT')

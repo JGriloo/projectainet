@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EstampaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FuncionarioController;
+use App\Http\Controllers\EncomendaController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Models\Encomenda;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,10 +24,17 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', [DashboardController::class, 'index'])->name('home');
 
+Route::get('estampas', [EstampaController::class, 'admin'])->name('estampas');
+
+Route::get('add-to-cart/{id}', [EstampaController::class, 'addToCart'])->name('estampas.addToCart');
+Route::get('shopping-cart', [EstampaController::class, 'shoppingCart'])->name('estampas.shoppingCart');
+Route::get('delete-shopping-cart', [EstampaController::class, 'deleteFromCart'])->name('estampas.delete.shoppingCart');
+
 Route::middleware('verified')->group(function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+    //CLIENTES
     Route::get('clientes', [ClienteController::class, 'admin'])->name('clientes')
         ->middleware('can:viewAny,App\Models\Cliente');
     Route::get('clientes/{cliente}/edit', [ClienteController::class, 'edit'])->name('clientes.edit')
@@ -63,4 +73,25 @@ Route::middleware('verified')->group(function () {
         ->middleware('can:update,funcionario');
     Route::delete('funcionarios/{funcionario}/foto', [FuncionarioController::class, 'destroy_foto'])->name('funcionarios.foto.destroy')
         ->middleware('can:update,funcionario');
+
+        //ESTAMPAS
+    Route::get('estampas/{estampa}/edit', [EstampaController::class, 'edit'])->name('estampas.edit')
+        ->middleware('can:view,estampa');
+    Route::get('estampas/{estampa}/consult', [EstampaController::class, 'consult'])->name('estampas.consult')
+        ->middleware('can:viewAny,estampa');
+    Route::get('estampas/create', [EstampaController::class, 'create'])->name('estampas.create')
+        ->middleware('can:doAny,App\Models\Estampa');
+    Route::post('estampas', [EstampaController::class, 'store'])->name('estampas.store')
+        ->middleware('can:doAny,App\Models\Estampa');
+    Route::put('estampas/{estampa}', [EstampaController::class, 'update'])->name('estampas.update')
+        ->middleware('can:doAny,estampa');
+    Route::delete('estampas/{estampa}/foto', [EstampaController::class, 'destroy_foto'])->name('estampas.foto.destroy')
+        ->middleware('can:doAny,estampa');
+    Route::delete('estampas/{estampa}', [EstampaController::class, 'delete'])->name('estampas.delete')
+        ->middleware('can:doAny,estampa');
+
+    //Encomendas
+    Route::get('encomendas', [EncomendaController::class, 'admin'])->name('encomendas');
+    Route::post('checkout', [EstampaController::class, 'checkout'])->name('checkout');
+
 });

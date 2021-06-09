@@ -74,8 +74,8 @@
 
                                 <div class="col-md-6">
                                     <input id="nif" type="number" min="0" class=" form-control @error('nif') is-invalid
-                                                                        @enderror" name="nif" value="{{ old('nif') }}"
-                                        required autocomplete="nif" autofocus>
+                                                                                @enderror" name="nif"
+                                        value="{{ old('nif') }}" required autocomplete="nif" autofocus>
 
                                     @error('nif')
                                         <span class="invalid-feedback" role="alert">

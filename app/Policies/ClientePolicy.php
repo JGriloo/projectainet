@@ -12,12 +12,6 @@ class ClientePolicy
 
     // If user is admin, authorization check always return true
     // Admin user is granted all previleges over "Aluno" entity
-    public function before($user, $ability)
-    {
-        if ($user->admin) {
-            return true;
-        }
-    }
 
     public function viewAny(User $user)
     {

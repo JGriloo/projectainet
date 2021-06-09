@@ -10,15 +10,15 @@ class Encomenda extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = ['notas', 'tipo_pagamento'];
+    protected $fillable = ['estado', 'cliente_id', 'preco_total', 'data','notas', 'nif', 'endereco', 'tipo_pagamento', 'ref_pagamento'];
 
-    public function clientes()
+    public function cliente()
     {
-        return $this->belongsToOne(Cliente::class, 'encomendas_cliente', 'encomenda_id', 'cliente_id');
+        return $this->belongsTo(Cliente::class, 'cliente_id', 'encomenda_id', 'cliente_id');
     }
 
     public function tshirts()
     {
-        return $this->belongsToMany(Tshirt::class, 'encomendas_tshirts', 'encomenda_id', 'tshirt_id');
+        return $this->hasMany(Tshirt::class);
     }
 }

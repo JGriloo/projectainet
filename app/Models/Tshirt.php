@@ -12,18 +12,18 @@ class Tshirt extends Model
     public $timestamps = false;
     protected $fillable = ['tamanho', 'quantidade'];
 
-    public function encomenda()
+    public function encomendaRef()
     {
-        return $this->belongsToOne(Encomenda::class, 'tshirts_encomenda', 'thisrt_id', 'encomenda_id');
+        return $this->belongsTo(Encomenda::class, 'tshirt', 'tshirt_id');
     }
 
-    public function estampas()
+    public function estampaRef()
     {
-        return $this->belongsToOne(Estampa::class, 'tshirts_estampas', 'thisrt_id', 'estampa_id');
+        return $this->belongsTo(Estampa::class, 'tshirt', 'tshirt_id');
     }
 
     public function cores()
     {
-        return $this->belongsToMany(Cores::class, 'tshirts_cores', 'thisrt_id', 'cor_id');
+        return $this->belongsTo(Cores::class, 'tshirts', 'tshirt_id');
     }
 }
