@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ClientePost extends FormRequest
+class EncomendaPost extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,16 +25,15 @@ class ClientePost extends FormRequest
     public function     rules()
     {
         return [
-            'name' =>         'required',
-            'endereco' =>       'nullable',
-            'nif' =>       'nullable|digits:9',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users', 'email')->ignore($this->id),
-            ],
-            'foto' => 'nullable|image|max:8192',   // Máximum size = 8Mb
-            'bloqueado' => 'nullable|boolean',
+            'estado' =>         'required',
+            'cliente_id' => 'required',
+            'data' =>       'required',
+            'notas' =>       'nullable',
+            'preco_total' => 'required',
+            'nif' => 'nullable|digits:9',
+            'endereco' => 'nullable',
+            'tipo_pagamento' => 'nullable',
+            'ref_pagamento' => 'nullable|digits:16',
         ];
     }
 }

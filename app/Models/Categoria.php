@@ -14,6 +14,6 @@ class Categoria extends Model
 
     public function estampas()
     {
-        return $this->belongsToMany(Estampa::class, 'categorias_estampas', 'categoria_id', 'estampa_id');
+        return $this->hasMany(Estampa::class, 'categoria', 'categoria_id');
     }
 }

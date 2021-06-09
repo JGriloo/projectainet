@@ -9,7 +9,7 @@
         @include('clientes.partials.create-edit')
         @isset($cliente->user->foto_url)
             <div class="form-group">
-                <img src="{{ $cliente->user->foto_url ? asset('storage/fotos/' . $cliente->user->foto_url) : asset('img/default_img.png') }}"
+                <img src="{{ $cliente->user->foto_url ? asset('public/fotos/' . $cliente->user->foto_url) : asset('img/default_img.png') }}"
                     alt="Foto do cliente" class="img-profile" style="max-width:100%">
             </div>
         @endisset

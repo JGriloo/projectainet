@@ -9,14 +9,23 @@
 
     <title>Dashboard</title>
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/estilos.css') }}" rel="stylesheet">
 
 </head>
 
@@ -29,7 +38,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
                 <div class="sidebar-brand-text mx-3">Tshirt SHOP</div>
             </a>
 
@@ -65,6 +74,16 @@
                     <a class="nav-link" href="{{ route('funcionarios') }}">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Funcionários</span></a>
+            <li class="nav-item {{ Route::currentRouteName() == 'estampas' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('estampas') }}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Estampas</span></a>
+            </li>
+            @can('costumers', App\Models\Encomenda::class)
+                <li class="nav-item {{ Route::currentRouteName() == 'encomendas' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('encomendas') }}">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Encomendas</span></a>
                 </li>
             @endcan
 
@@ -96,10 +115,33 @@
 
                     <ul class="navbar-nav ml-auto">
                         @guest
+                            <li class="shoppingCart">
+                                <a href="{{ route('estampas.shoppingCart') }}" class="iconCart"><i
+                                        class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping
+                                    Cart
+                                    <span
+                                        class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQuantidade : '' }}
+                                    </span>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
                         @else
+                            @if (Auth::user()->tipo == 'C')
+                                <li class="shoppingCart">
+                                    <a href="{{ route('estampas.shoppingCart') }}" class="iconCart"><i
+                                            class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping
+                                        Cart
+                                        <span
+                                            class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQuantidade : '' }}
+                                        </span>
+                                    </a>
+                                </li>
+                            @endif
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

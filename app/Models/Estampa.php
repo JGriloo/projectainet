@@ -15,7 +15,7 @@ class Estampa extends Model
 
     public function tshirts()
     {
-        return $this->belongsToMany(Tshirt::class, 'estampas_tshirts', 'estampa_id', 'tshirt_id');
+        return $this->hasMany(Tshirt::class, 'tshirt', 'tshirt_id');
     }
 
     public function clientes()
@@ -23,8 +23,8 @@ class Estampa extends Model
         return $this->belongsToMany(Clientes::class, 'estampas_clientes', 'estampa_id', 'cliente_id');
     }
 
-    public function categoria()
+    public function categoriaRef()
     {
-        return $this->belongsToOne(Categoria::class, 'estampas_categoria', 'estampa_id', 'categoria_id');
+        return $this->belongsTo(Categoria::class, 'categoria', 'categoria_id');
     }
 }
