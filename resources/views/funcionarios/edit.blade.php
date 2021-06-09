@@ -29,4 +29,5 @@
         @csrf
         @method('DELETE')
     </form>
+    @dump($errors)
 @endsection

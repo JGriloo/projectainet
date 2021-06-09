@@ -46,21 +46,21 @@ Route::middleware('verified')->group(function () {
 
 
     Route::get('funcionarios', [FuncionarioController::class, 'admin'])->name('funcionarios')
-        ->middleware('can:viewAny,App\Models\User');
+        ->middleware('can:doAny,App\Models\User');
     Route::get('funcionarios/{funcionario}/consult', [FuncionarioController::class, 'consult'])->name('funcionarios.consult')
-        ->middleware('can:viewAny,funcionario');
+        ->middleware('can:doAny,funcionario');
     Route::put('funcionarios/{funcionario}/bloqueado', [FuncionarioController::class, 'bloquear'])->name('funcionarios.bloquear')
-        ->middleware('can:bloquear,funcionario');
+        ->middleware('can:doAny,funcionario');
     Route::delete('funcionarios/{funcionario}', [FuncionarioController::class, 'delete'])->name('funcionarios.delete')
-        ->middleware('can:delete,funcionario');
+        ->middleware('can:doAny,funcionario');
     Route::get('funcionarios/funcionario', [FuncionarioController::class, 'create'])->name('funcionarios.create')
-        ->middleware('can:create,App\Models\User');
+        ->middleware('can:doAny,App\Models\User');
     Route::post('funcionarios', [FuncionarioController::class, 'store'])->name('funcionarios.store')
-        ->middleware('can:create,App\Models\User');
+        ->middleware('can:doAny,App\Models\User');
     Route::put('funcionarios/{funcionario}', [FuncionarioController::class, 'update'])->name('funcionarios.update')
-        ->middleware('can:update,funcionario');
+        ->middleware('can:doAny,funcionario');
     Route::get('funcionarios/{funcionario}/edit', [FuncionarioController::class, 'edit'])->name('funcionarios.edit')
-        ->middleware('can:update,funcionario');
+        ->middleware('can:doAny,funcionario');
     Route::delete('funcionarios/{funcionario}/foto', [FuncionarioController::class, 'destroy_foto'])->name('funcionarios.foto.destroy')
-        ->middleware('can:update,funcionario');
+        ->middleware('can:doAny,funcionario');
 });

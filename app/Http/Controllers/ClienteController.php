@@ -100,7 +100,7 @@ class ClienteController extends Controller
             $cliente->user->foto_url = basename($path);
         }
         $cliente->user->save();
-        return redirect()->route('clientes')
+        return redirect()->route('dashboard')
             ->with('alert-msg', 'Cliente "' . $cliente->user->name . '" foi alterado com sucesso!')
             ->with('alert-type', 'success');
     }

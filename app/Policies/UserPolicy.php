@@ -21,6 +21,11 @@ class UserPolicy
         return ($user->tipo == 'A');
     }
 
+    public function doAny(User $user)
+    {
+        return ($user->tipo == 'A');
+    }
+
     public function view(User $user)
     {
         return ($user->tipo == 'A');

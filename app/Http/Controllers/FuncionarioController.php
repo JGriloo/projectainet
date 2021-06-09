@@ -101,15 +101,12 @@ class FuncionarioController extends Controller
         }
 
     }
+
     public function update(UserUpdatePost $request, User $funcionario)
     {
-        dd($funcionario);
         $validated_data = $request->validated();
         $funcionario->email = $validated_data['email'];
         $funcionario->name = $validated_data['name'];
-        if ($validated_data['password']!=NULL){
-            $funcionario->password=Hash::make($validated_data['password']);
-        }
         if ($request->hasFile('foto')) {
             Storage::delete('public/fotos/' . $funcionario->foto_url);
             $path = $request->foto->store('public/fotos/');
