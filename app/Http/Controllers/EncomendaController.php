@@ -31,12 +31,7 @@ class EncomendaController extends Controller
         $qry = Encomenda::where('cliente_id', '=', Auth::user()->id);
     }
 
-        /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -48,37 +43,28 @@ class EncomendaController extends Controller
             'nif' => ['required','string','digits:9'],
             'endereco' => ['required','string','max:255'],
             'tipo_pagamento' => ['required'],
-            'ref_pagamento' => ['required','string'],
+            'ref_pagamento' => ['required','string','digits:16'],
         ]);
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function checkout(EncomendaPost $request)
+    public function checkout(EncomendaPost $request)
     {
         $oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
-        $encomenda = new Encomenda;
 
-        $encomenda = Encomenda::create([
-            var_dump($request),
-            'estado' => 'pendente',
-            'cliente_id' => Auth::user()->id,
-            'data' => now(),
-            'notas' => $request['notas'],
-            'preco_total' => $cart->totalPreco,
-            'nif' => $request['nif'],
-            'endereco' => $request['endereco'],
-            'tipo_pagamento' => $request['tipo_pagamento'],
-            'ref_pagamento' => $request['ref_pagamento'],
-        ]);
-
-        $encomenda->save();
-        return view('estampas')
+        $validated_data = $request->validated();
+        $newEncomenda = new Encomenda;
+        $newEncomenda->estado = 'pendente';
+        $newEncomenda->cliente_id = Auth::user()->id;
+        $newEncomenda->data = now();
+        $newEncomenda->notas = $validated_data['notas'];
+        $newEncomenda->preco_total = $cart->totalPreco;
+        $newEncomenda->nif = $validated_data['nif'];
+        $newEncomenda->endereco = $validated_data['endereco'];
+        $newEncomenda->tipo_pagamento = $validated_data['tipo_pagamento'];
+        $newEncomenda->ref_pagamento = $validated_data['ref_pagamento'];
+        $newEncomenda->save();
+        return redirect()->route('estampas')
             ->with('alert-msg', 'Encomenda foi criada com sucesso!')
             ->with('alert-type', 'success');
     }

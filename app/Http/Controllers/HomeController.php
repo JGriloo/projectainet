@@ -13,8 +13,9 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','verified']); //só consegue entrar em todos os metodos do perfil se tiver o e-mail verificado
+        $this->middleware('auth');
     }
+
     /**
      * Show the application dashboard.
      *
@@ -22,6 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        return view('home');
     }
 }

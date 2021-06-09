@@ -28,7 +28,7 @@ class UserPolicy
 
     public function view(User $user)
     {
-        return ($user->tipo == 'A');
+        return ($user->tipo == 'A' || $user->tipo == 'C');
     }
 
     public function bloquear(User $user)

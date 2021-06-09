@@ -92,6 +92,14 @@ Route::middleware('verified')->group(function () {
 
     //Encomendas
     Route::get('encomendas', [EncomendaController::class, 'admin'])->name('encomendas');
-    Route::post('checkout', [EstampaController::class, 'checkout'])->name('checkout');
+    Route::post('checkout', [EncomendaController::class, 'checkout'])->name('checkout');
 
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

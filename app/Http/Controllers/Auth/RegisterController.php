@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use App\Models\Cliente;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -54,9 +53,6 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'nif' => ['required','string','digits:9'],
-            'endereco' => ['required','string','max:255'],
-            'foto_url' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:9000'],
         ]);
     }
 
@@ -68,21 +64,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'foto_url' => $data['foto_url'],
-            'email_verified_at' => null,
         ]);
-
-        Cliente::create([
-            'id' => $user->id,
-            'nif' => $data['nif'],
-            'endereco' => $data['endereco'],
-            'created_at' => now(),
-        ]);
-        $user->save();
-        return $user;
     }
 }

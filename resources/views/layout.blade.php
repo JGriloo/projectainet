@@ -9,23 +9,14 @@
 
     <title>Dashboard</title>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Custom fonts for this template-->
-    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/estilos.css') }}" rel="stylesheet">
+    <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/estilos.css')}}" rel="stylesheet">
+
 
 </head>
 
@@ -70,15 +61,19 @@
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">
 
-                <li class="nav-item {{ Route::currentRouteName() == 'funcionarios' ? 'active' : '' }}">
+            <li class="nav-item {{ Route::currentRouteName() == 'funcionarios' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('funcionarios') }}">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Funcionários</span></a>
+            @endcan
+            <!-- Nav Item -->
+            @can('view', App\Models\User::class)
             <li class="nav-item {{ Route::currentRouteName() == 'estampas' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('estampas') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Estampas</span></a>
             </li>
+            @endcan
             @can('costumers', App\Models\Encomenda::class)
                 <li class="nav-item {{ Route::currentRouteName() == 'encomendas' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('encomendas') }}">
@@ -144,15 +139,12 @@
                             @endif
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span
-                                        class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                                    <img class="img-profile rounded-circle"
-                                        src="{{ Auth::user()->foto_url ? asset('storage/fotos/' . Auth::user()->foto_url) : asset('img/default_img.png') }}">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->name}}</span>
+                                    <img class="img-profile rounded-circle" src="{{Auth::user()->foto_url ? asset('public/fotos/' . Auth::user()->url_foto) : asset('img/default_img.png') }}">
                                 </a>
                                 <!-- Dropdown - User Information -->
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                     <a class="dropdown-item"
                                         href="{{ auth()->user()->tipo == 'C' ? route('clientes.edit', auth()->user()->id) : 'clientes.create', auth()->user()->id }}">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -167,8 +159,6 @@
                             </li>
                         @endguest
                     </ul>
-
-
                 </nav>
                 <!-- End of Topbar -->
 
@@ -254,7 +244,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
-
 
 </body>
 

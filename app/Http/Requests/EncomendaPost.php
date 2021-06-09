@@ -33,7 +33,7 @@ class EncomendaPost extends FormRequest
             'nif' => 'nullable|digits:9',
             'endereco' => 'nullable',
             'tipo_pagamento' => 'nullable',
-            'ref_pagamento' => 'nullable|digits:16',
+            'ref_pagamento' => 'nullable',
         ];
     }
 }
