@@ -2,10 +2,10 @@
 @section('title', 'Funcionários')
 @section('content')
     <div class="row mb-3">
-            @can('create', App\Models\User::class)
-                <a href="{{ route('funcionarios.create') }}" class="btn btn-success" role="button" aria-pressed="true">Novo
-                    Funcionário</a>
-            @endcan
+        @can('create', App\Models\User::class)
+            <a href="{{ route('funcionarios.create') }}" class="btn btn-success" role="button" aria-pressed="true">Novo
+                Funcionário</a>
+        @endcan
         <div class="col-9">
             <form method="GET" action="{{ route('funcionarios') }}" class="form-group">
             </form>
@@ -38,49 +38,53 @@
                     </td>
                     <td>
                         @can('viewAny', $funcionario)
-                        <div class="col text-center">
-                            <a href="{{ route('funcionarios.consult', ['funcionario' => $funcionario]) }}" class="btn btn-primary btn-sm"
-                                role="button" aria-pressed="true">Consultar</a>
-                        </div>
+                            <div class="col text-center">
+                                <a href="{{ route('funcionarios.consult', ['funcionario' => $funcionario]) }}"
+                                    class="btn btn-primary btn-sm" role="button" aria-pressed="true">Consultar</a>
+                            </div>
                         @endcan
                     </td>
                     <td>
                         @can('viewAny', $funcionario)
-                        <div class="col text-center">
-                            <a href="{{route('funcionarios.edit', ['funcionario' => $funcionario])}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
-                        </div>
+                            <div class="col text-center">
+                                <a href="{{ route('funcionarios.edit', ['funcionario' => $funcionario]) }}"
+                                    class="btn btn-primary btn-sm" role="button" aria-pressed="true">Alterar</a>
+                            </div>
                         @endcan
                     </td>
                     <td>
                         <div class="col text-center">
-                        @can('bloquear', $funcionario)
-                            @if ($funcionario->bloqueado==0)
-                                <form action="{{ route('funcionarios.bloquear', ['funcionario' => $funcionario]) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="bloqueado" value='1'>
-                                    <input type="submit" class="btn btn-warning btn-sm" value="Bloquear">
-                                </form>
-                            @else
-                                <form action="{{ route('funcionarios.bloquear', ['funcionario' => $funcionario]) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="bloqueado" value='0'>
-                                    <input type="submit" class="btn btn-success btn-sm" value="Desbloquear">
-                                </form>
-                            @endif
-                        @endcan
+                            @can('bloquear', $funcionario)
+                                @if ($funcionario->bloqueado == 0)
+                                    <form action="{{ route('funcionarios.bloquear', ['funcionario' => $funcionario]) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="bloqueado" value='1'>
+                                        <input type="submit" class="btn btn-warning btn-sm" value="Bloquear">
+                                    </form>
+                                @else
+                                    <form action="{{ route('funcionarios.bloquear', ['funcionario' => $funcionario]) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="bloqueado" value='0'>
+                                        <input type="submit" class="btn btn-success btn-sm" value="Desbloquear">
+                                    </form>
+                                @endif
+                            @endcan
                         </div>
                     </td>
                     <td>
                         @can('delete', $funcionario)
-                        <div class="col text-center">
-                            <form action="{{ route('funcionarios.delete', ['funcionario' => $funcionario]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
-                            </form>
-                        </div>
+                            <div class="col text-center">
+                                <form action="{{ route('funcionarios.delete', ['funcionario' => $funcionario]) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" class="btn btn-danger btn-sm" value="Apagar">
+                                </form>
+                            </div>
                         @endcan
                     </td>
                 </tr>

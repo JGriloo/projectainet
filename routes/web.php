@@ -27,8 +27,6 @@ Route::get('/', [DashboardController::class, 'index'])->name('home');
 Route::get('estampas', [EstampaController::class, 'admin'])->name('estampas');
 
 Route::get('add-to-cart/{id}', [EstampaController::class, 'addToCart'])->name('estampas.addToCart');
-Route::get('shopping-cart', [EstampaController::class, 'shoppingCart'])->name('estampas.shoppingCart');
-Route::get('delete-shopping-cart', [EstampaController::class, 'deleteFromCart'])->name('estampas.delete.shoppingCart');
 
 Route::middleware('verified')->group(function () {
 
@@ -89,11 +87,21 @@ Route::middleware('verified')->group(function () {
         ->middleware('can:doAny,estampa');
     Route::delete('estampas/{estampa}', [EstampaController::class, 'delete'])->name('estampas.delete')
         ->middleware('can:doAny,estampa');
+    Route::get('shopping-cart', [EstampaController::class, 'shoppingCart'])->name('estampas.shoppingCart');
+    Route::get('delete-shopping-cart', [EstampaController::class, 'deleteFromCart'])->name('estampas.delete.shoppingCart');
+
 
     //Encomendas
-    Route::get('encomendas', [EncomendaController::class, 'admin'])->name('encomendas');
+    Route::get('historicoEncomendasCliente', [EncomendaController::class, 'historicoEncomendasCliente'])->name('historico.encomendas.cliente');
+    Route::get('encomendasFuncionario', [EncomendaController::class, 'encomendasFuncionario'])->name('encomendas.funcionario');
+    Route::get('encomendasAdministrador', [EncomendaController::class, 'encomendasAdministrador'])->name('encomendas.administrador');
     Route::post('checkout', [EncomendaController::class, 'checkout'])->name('checkout');
-
+    Route::put('encomendas/{encomenda}/paga', [EncomendaController::class, 'encomendaPaga'])->name('encomenda.paga')
+        ->middleware('can:funcionariosAndAdmins,encomenda');
+    Route::put('encomendas/{encomenda}/fechada', [EncomendaController::class, 'encomendaFechada'])->name('encomenda.fechada')
+        ->middleware('can:funcionariosAndAdmins,encomenda');
+    Route::put('encomendas/{encomenda}/anulada', [EncomendaController::class, 'encomendaAnulada'])->name('encomenda.anulada')
+        ->middleware('can:administradores,encomenda');
 });
 
 Auth::routes();

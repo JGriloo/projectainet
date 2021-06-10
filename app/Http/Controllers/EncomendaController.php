@@ -16,7 +16,7 @@ use App\Models\Cart;
 
 class EncomendaController extends Controller
 {
-    public function admin(Request $request)
+    public function historicoEncomendasCliente(Request $request)
     {
         $encomendasQuery = Encomenda::where('cliente_id', '=', Auth::user()->id);
         //$qry =  Docente::query();
@@ -27,25 +27,29 @@ class EncomendaController extends Controller
             ->withEncomendas($encomendas);
     }
 
+    public function encomendasFuncionario(Request $request)
+    {
+        $encomendasQuery = Encomenda::query()->where('estado','LIKE','pendente')
+                                             ->orWhere('estado','LIKE','paga');
+
+        $encomendas = $encomendasQuery->paginate(10);
+        return view('encomendas.index')
+            ->withEncomendas($encomendas);
+    }
+
+    public function encomendasAdministrador(Request $request)
+    {
+        $encomendasQuery = Encomenda::query();
+
+        $encomendas = $encomendasQuery->paginate(10);
+        return view('encomendas.index')
+            ->withEncomendas($encomendas);
+    }
+
     public function detalhesEncomenda(){
         $qry = Encomenda::where('cliente_id', '=', Auth::user()->id);
     }
 
-
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'estado' => ['required'],
-            'cliente_id' => ['required'],
-            'data' => ['required'],
-            'notas' => ['nullable', 'string', 'max:255'],
-            'preco_total' => ['required'],
-            'nif' => ['required','string','digits:9'],
-            'endereco' => ['required','string','max:255'],
-            'tipo_pagamento' => ['required'],
-            'ref_pagamento' => ['required','string','digits:16'],
-        ]);
-    }
 
     public function checkout(EncomendaPost $request)
     {
@@ -67,5 +71,32 @@ class EncomendaController extends Controller
         return redirect()->route('estampas')
             ->with('alert-msg', 'Encomenda foi criada com sucesso!')
             ->with('alert-type', 'success');
+    }
+
+    public function encomendaPaga(Encomenda $encomenda)
+    {
+            $encomenda->estado = 'paga';
+            $encomenda->save();
+            return redirect()->route('dashboard')
+                ->with('alert-msg', 'Encomenda foi paga com sucesso!')
+                ->with('alert-type', 'success');
+    }
+
+    public function encomendaFechada(Encomenda $encomenda)
+    {
+            $encomenda->estado = 'fechada';
+            $encomenda->save();
+            return redirect()->route('dashboard')
+                ->with('alert-msg', 'Encomenda foi fechada com sucesso!')
+                ->with('alert-type', 'success');
+    }
+
+    public function encomendaAnulada(Encomenda $encomenda)
+    {
+            $encomenda->estado = 'anulada';
+            $encomenda->save();
+            return redirect()->route('encomendas.administrador')
+                ->with('alert-msg', 'Encomenda foi anulada com sucesso!')
+                ->with('alert-type', 'success');
     }
 }

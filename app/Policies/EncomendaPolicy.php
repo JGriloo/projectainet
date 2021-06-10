@@ -13,9 +13,24 @@ class EncomendaPolicy
     // If user is admin, authorization check always return true
     // Admin user is granted all previleges over "Aluno" entity
 
-    public function costumers(User $user)
+    public function clientes(User $user)
     {
         return ($user->tipo == 'C');
+    }
+
+    public function funcionarios(User $user)
+    {
+        return ($user->tipo == 'F');
+    }
+
+    public function funcionariosAndAdmins(User $user)
+    {
+        return ($user->tipo == 'F' || $user->tipo == 'A');
+    }
+
+    public function administradores(User $user)
+    {
+        return ($user->tipo == 'A');
     }
 
     public function restore(User $user, Estampa $estampa)

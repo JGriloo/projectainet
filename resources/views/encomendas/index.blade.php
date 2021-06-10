@@ -17,7 +17,7 @@
                                 <th scope="col">Endereço</th>
                                 <th scope="col">Tipo Pagamento</th>
                                 <th scope="col">Referência de Pagamento</th>
-                                <th scope="col">Detalhes</th>
+                                <th scope="col">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,6 +50,39 @@
                                     <td>{{ $encomenda->tipo_pagamento }}
                                     <td>{{ $encomenda->ref_pagamento }}
                                         {{-- <td><button><i class="fa fa-plus" aria-hidden="true"></i></button> --}}
+                                    </td>
+                                    <td>
+                                        @if (Auth::user()->tipo == 'F' || Auth::user()->tipo == 'A')
+                                            @if ($encomenda->estado == 'pendente')
+                                                <form action="{{ route('encomenda.paga', ['encomenda' => $encomenda]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <input type="submit" class="btn-sm btn-info" value="Paga">
+                                                </form>
+                                            @else
+                                                <form
+                                                    action="{{ route('encomenda.fechada', ['encomenda' => $encomenda]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <input type="submit" class="btn-sm btn-success" value="Fechada">
+                                                </form>
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (Auth::user()->tipo == 'A')
+                                            @if ($encomenda->estado != 'anulada')
+                                                <form
+                                                    action="{{ route('encomenda.anulada', ['encomenda' => $encomenda]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <input type="submit" class="btn-sm btn-danger" value="Anular">
+                                                </form>
+                                            @endif
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

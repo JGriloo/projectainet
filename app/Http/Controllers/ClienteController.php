@@ -94,10 +94,11 @@ class ClienteController extends Controller
         $cliente->user->name = $validated_data['name'];
         $cliente->nif = $validated_data['nif'];
         $cliente->endereco = $validated_data['endereco'];
-        if ($request->hasFile('foto_url')) {
+        if ($request->hasFile('foto')) {
             Storage::delete('public/fotos/' . $cliente->user->foto_url);
             $path = $request->foto->store('public/fotos/');
             $cliente->user->foto_url = basename($path);
+            $cliente->user->save();
         }
         $cliente->user->save();
         return redirect()->route('dashboard')

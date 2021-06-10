@@ -34,7 +34,7 @@ class ClientePost extends FormRequest
                 Rule::unique('users', 'email')->ignore($this->id),
             ],
             'foto' => 'nullable|image|max:8192',   // Máximum size = 8Mb
-            'bloqueado' => 'nullable|boolean',
+            'bloqueado' => 'required|boolean',
         ];
     }
 }

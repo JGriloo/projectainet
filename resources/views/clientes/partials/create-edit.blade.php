@@ -29,6 +29,12 @@
     @enderror
 </div>
 <div class="form-group">
+    <input type="hidden" class="form-control" name="bloqueado" id="inputBloqueado" value="{{ old('bloqueado', $cliente->user->bloqueado) }}">
+    @error('nif')
+        <div class="small text-danger">{{ $message }}</div>
+    @enderror
+</div>
+<div class="form-group">
     <label for="inputFoto">Upload da foto</label>
     <input type="file" class="form-control" name="foto_url" id="inputFoto">
     @error('foto_url')
