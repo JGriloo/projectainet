@@ -2,7 +2,7 @@
 @section('title', 'Carrinho de Compras')
 @section('content')
     @if (Session::has('cart'))
-        <form method="post" action="{{ route('checkout') }}" class="form" enctype="application/x-www-form-urlencoded">
+        <form method="post" action="{{ route('checkout') }}" class="form">
             @csrf
             <div class="form-group row">
                 @foreach ($estampas as $estampa)
@@ -12,7 +12,6 @@
                         <span class="label label-success" style="color:orange"> 10€</span>
                         {{-- Escolher o tamanho da tshirt --}}
                         <div class="col-6">
-                            <form class="form-group">
                                 <div class="input-group">
                                     <select class="custom-select" name="tshirt" id="inputTshirt" aria-label="Tshirt">
                                         <option value="">XS</option>
@@ -22,7 +21,6 @@
                                         <option value="">XL</option>
                                     </select>
                                 </div>
-                            </form>
                         </div>
                         {{-- Escolher a cor da tshirt --}}
                         <div class="input-group">
@@ -36,6 +34,9 @@
                         </div>
                     </li>
                 @endforeach
+            </div>
+            <div>
+                <input type="hidden" name="cliente_id" value="{{Auth::user()->id}}">
             </div>
             <div class="item-form">
                 <label for="inputNome">NIF</label>
@@ -62,11 +63,12 @@
             <div class="item-form">
                 <label for="inputEmail">Tipo Pagamento</label>
                 <div class="col-md-6">
-                    <select>
-                        <option>Paypal</option>
-                        <option>VISA</option>
-                        <option>MasterCard</option>
-                    </select>
+                        <input type="radio" name="tipo_pagamento" value="PayPal">
+                        <label for="PayPal">PayPal</label><br>
+                        <input type="radio" name="tipo_pagamento" value="VISA">
+                        <label for="VISA">VISA</label><br>
+                        <input type="radio" name="tipo_pagamento" value="MC">
+                        <label for="MC">MC</label><br>
                 </div>
                 @error('tipo_pagamento')
                     <div class="small text-danger">{{ $message }}</div>
@@ -85,11 +87,11 @@
                 <a href="{{ route('estampas') }}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
-        {{-- @else
-    <div class="row">
-        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-            <strong>No items in cart </strong>
+        @else
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+                <strong>No items in cart </strong>
+            </div>
         </div>
-    </div> --}}
-    @endif
+        @endif
 @endsection

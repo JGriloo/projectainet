@@ -50,6 +50,11 @@ class EncomendaController extends Controller
         $qry = Encomenda::where('cliente_id', '=', Auth::user()->id);
     }
 
+    public function deleteFromCart()
+    {
+        Session::forget('cart');
+        return redirect()->route('estampas')->with('message','Operation Successful !');
+    }
 
     public function checkout(EncomendaPost $request)
     {
@@ -57,8 +62,8 @@ class EncomendaController extends Controller
         $cart = new Cart($oldCart);
 
         $validated_data = $request->validated();
-        $newEncomenda = new Encomenda;
-        $newEncomenda->estado = 'pendente';
+        $newEncomenda = Encomenda::create($validated_data);
+        $newEncomenda->estado = "pendente";
         $newEncomenda->cliente_id = Auth::user()->id;
         $newEncomenda->data = now();
         $newEncomenda->notas = $validated_data['notas'];
@@ -68,6 +73,8 @@ class EncomendaController extends Controller
         $newEncomenda->tipo_pagamento = $validated_data['tipo_pagamento'];
         $newEncomenda->ref_pagamento = $validated_data['ref_pagamento'];
         $newEncomenda->save();
+        $oldCart = EncomendaController::deleteFromCart();
+        //$oldCart->totalQuantidade = 0;
         return redirect()->route('estampas')
             ->with('alert-msg', 'Encomenda foi criada com sucesso!')
             ->with('alert-type', 'success');

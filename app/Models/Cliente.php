@@ -21,10 +21,10 @@ class Cliente extends Model
 
     public function encomendas()
     {
-        return $this->belongsToMany(Encomenda::class, 'clientes_encomendas', 'cliente_id', 'estampa_id');
+        return $this->belongsToMany(Encomenda::class, 'cliente_id', 'id');
     }
     public function estampas()
     {
-        return $this->belongsToMany(Estampa::class, 'clientes_estampas', 'cliente_id', 'estampa_id');
+        return $this->belongsToMany(Estampa::class, 'clientes', 'cliente_id', 'id');
     }
 }

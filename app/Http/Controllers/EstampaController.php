@@ -117,12 +117,6 @@ class EstampaController extends Controller
         return redirect()->route('estampas');
     }
 
-    public function deleteFromCart()
-    {
-        Session::forget('cart');
-        return redirect()->route('estampas')->with('message','Operation Successful !');
-    }
-
     public function shoppingCart(Request $request, Cliente $cliente){
         if(!Session::has('cart')){
             return view('estampas.shoppingCart', ['estampas' => null]);

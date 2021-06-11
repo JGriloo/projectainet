@@ -36,7 +36,7 @@
 </div>
 <div class="form-group">
     <label for="inputFoto">Upload da foto</label>
-    <input type="file" class="form-control" name="foto_url" id="inputFoto">
+    <input type="file" class="form-control" name="foto" id="inputFoto">
     @error('foto_url')
         <div class="small text-danger">{{ $message }}</div>
     @enderror

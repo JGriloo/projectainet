@@ -24,16 +24,14 @@ class EncomendaPost extends FormRequest
      */
     public function     rules()
     {
-        return [
-            'estado' =>         'required',
+        $baseRules = [
             'cliente_id' => 'required',
-            'data' =>       'required',
-            'notas' =>       'nullable',
-            'preco_total' => 'required',
-            'nif' => 'nullable|digits:9',
-            'endereco' => 'nullable',
-            'tipo_pagamento' => 'nullable',
-            'ref_pagamento' => 'nullable',
+            'notas' => 'nullable',
+            'nif' => 'required|digits:9',
+            'endereco' => 'required',
+            'tipo_pagamento' => 'required',
+            'ref_pagamento' => 'required',
         ];
+        return $baseRules;
     }
 }
