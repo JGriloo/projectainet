@@ -60,7 +60,7 @@ class EncomendaController extends Controller
     {
         $oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
-
+        //dd($request);
         $validated_data = $request->validated();
         $newEncomenda = Encomenda::create($validated_data);
         $newEncomenda->estado = "pendente";
@@ -73,6 +73,15 @@ class EncomendaController extends Controller
         $newEncomenda->tipo_pagamento = $validated_data['tipo_pagamento'];
         $newEncomenda->ref_pagamento = $validated_data['ref_pagamento'];
         $newEncomenda->save();
+        $tshirts = array(
+            'estampa_id' => $request->idTshirt,
+            'quantidade' => $request->quantidadeTshirt,
+            'preco' => $request->precoTshirt,
+            'tamanho' => $request->tamanhoTshirt,
+            'cor_codigo' => $request->corTshirt,
+            'encomenda_id' => $newEncomenda->id,
+        );
+        $this->saveTshirt($tshirts);
         $oldCart = EncomendaController::deleteFromCart();
         //$oldCart->totalQuantidade = 0;
         return redirect()->route('estampas')
@@ -106,4 +115,19 @@ class EncomendaController extends Controller
                 ->with('alert-msg', 'Encomenda foi anulada com sucesso!')
                 ->with('alert-type', 'success');
     }
+
+    public function saveTshirt($tshirts){
+        for($i=0;$i<count($tshirts['quantidade']);$i++){
+            $newTshirt = new Tshirt;
+            $newTshirt->estampa_id = $tshirts['estampa_id'][$i];
+            $newTshirt->encomenda_id = $tshirts['encomenda_id'];
+            $newTshirt->quantidade = $tshirts['quantidade'][$i];
+            $newTshirt->cor_codigo = $tshirts['cor_codigo'][$i];
+            $newTshirt->tamanho = $tshirts['tamanho'][$i];
+            $newTshirt->preco_un = $tshirts['preco'][$i];
+            $newTshirt->subtotal = $tshirts['quantidade'][$i]*$tshirts['preco'][$i];
+            $newTshirt->save();
+        }
+    }
+
 }

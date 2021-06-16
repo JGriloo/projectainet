@@ -13,18 +13,18 @@
                         {{-- Escolher o tamanho da tshirt --}}
                         <div class="col-6">
                                 <div class="input-group">
-                                    <select class="custom-select" name="tshirt" id="inputTshirt" aria-label="Tshirt">
-                                        <option value="">XS</option>
-                                        <option value="">S</option>
-                                        <option value="">M</option>
-                                        <option value="">L</option>
-                                        <option value="">XL</option>
+                                    <select class="custom-select" name="tamanhoTshirt[]" id="inputTshirt" aria-label="Tshirt">
+                                        <option value="XS">XS</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
                                     </select>
                                 </div>
                         </div>
                         {{-- Escolher a cor da tshirt --}}
                         <div class="input-group">
-                            <select class="custom-select" name="cor" id="inputCor" aria-label="Cor">
+                            <select class="custom-select" name="corTshirt[]" id="inputCor" aria-label="Cor">
                                 @foreach ($cores as $cor => $nome)
                                     <option value={{ $cor }}
                                         {{ $cor == old('cor', $selectedCor) ? 'selected' : '' }}>
@@ -33,6 +33,10 @@
                             </select>
                         </div>
                     </li>
+                    <input type="hidden" name="quantidadeTshirt[]" value="{{$estampa['quantidade']}}">
+                    <input type="hidden" name="idTshirt[]" value="{{$estampa['estampa']['id']}}">
+                    <input type="hidden" name="precoTshirt[]" value="10">
+
                 @endforeach
             </div>
             <div>

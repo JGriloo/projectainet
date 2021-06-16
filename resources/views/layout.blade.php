@@ -95,6 +95,13 @@
                         <span>Encomendas</span></a>
                 </li>
             @endcan
+            @can('administradores', App\Models\Encomenda::class)
+                <li class="nav-item {{ Route::currentRouteName() == 'estatisticas' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('estatisticas') }}">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Estatisticas</span></a>
+                </li>
+            @endcan
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

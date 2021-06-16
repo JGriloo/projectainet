@@ -5,6 +5,7 @@ use App\Http\Controllers\EstampaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\EncomendaController;
+use App\Http\Controllers\EstatisticaController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Models\Encomenda;
 use Illuminate\Support\Facades\Route;
@@ -102,6 +103,18 @@ Route::middleware('verified')->group(function () {
         ->middleware('can:funcionariosAndAdmins,encomenda');
     Route::put('encomendas/{encomenda}/anulada', [EncomendaController::class, 'encomendaAnulada'])->name('encomenda.anulada')
         ->middleware('can:administradores,encomenda');
+
+    //Estatistica
+    Route::get('estatisticas', [EstatisticaController::class, 'admin'])->name('estatisticas')
+        ->middleware('can:administradores,App\Models\Encomenda');
+    Route::get('estatisticas/sort', [EstatisticaController::class, 'sort'])->name('estatisticas.sort')
+        ->middleware('can:administradores,App\Models\Encomenda');
+    Route::get('estatisticas/dataSort', [EstatisticaController::class, 'dataSort'])->name('estatisticas.dataSort')
+        ->middleware('can:administradores,App\Models\Encomenda');
+    Route::get('estatisticas/clienteSort', [EstatisticaController::class, 'clienteSort'])->name('estatisticas.clienteSort')
+        ->middleware('can:viewAny,App\Models\Cliente');
+    Route::get('estatisticas/estampaSort', [EstatisticaController::class, 'estampaSort'])->name('estatisticas.estampaSort')
+        ->middleware('can:administradores,App\Models\Encomenda');
 });
 
 Auth::routes();

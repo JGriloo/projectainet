@@ -8,6 +8,13 @@
         @method('GET')
         <input type="hidden" name="id" value="{{ $cliente->id }}">
         <div class="form-group">
+            <label for="inputID">ID de Cliente</label>
+            <p class="form-control" name="clienteID">{{ $cliente->id }}</p>
+            @error('name')
+                <div class="small text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-group">
             <label for="inputNome">Nome</label>
             <p class="form-control" name="name">{{ $cliente->user->name }}</p>
             @error('name')
